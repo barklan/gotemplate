@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  myapp:
+    image: '${DOCKER_IMAGE_PREFIX?Variable not set}myapp:rolling'
+    build:
+      context: .
+      dockerfile: dockerfiles/myapp.dockerfile
+      args:
+        DOCKER_IMAGE_PREFIX: ${DOCKER_IMAGE_PREFIX?Variable not set}
+    networks:
+      - traefik-public
+    env_file:
+      - ./.env
+
+networks:
+  traefik-public:
+    external: true

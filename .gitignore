@@ -13,3 +13,14 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+.cache
+
+### macOS ###
+.DS_Store
+
+### PyCharm ###
+.idea/
+
+### VisualStudioCode ###
+.vscode/settings.json
