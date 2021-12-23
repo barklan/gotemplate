@@ -13,7 +13,7 @@ func handleSignals(sigs <-chan os.Signal, done chan<- struct{}) {
 	sig := <-sigs
 	log.Printf("received %s - exiting\n", sig)
 	fmt.Println(sig)
-	done <- struct{}{}
+	os.Exit(0)
 }
 
 func main() {
@@ -24,6 +24,4 @@ func main() {
 	go handleSignals(sigs, done)
 
 	// Entry here
-
-	<-done
 }
