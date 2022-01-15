@@ -26,21 +26,21 @@ function _use_env {
 
 # ----------------------------------------------------------------------------
 
-function up {
+up() {
     reflex -c reflex.conf --decoration=fancy
 }
 
-function up:myapp {
+up:myapp() {
     _use_env
     go run cmd/myapp/main.go
 }
 
-function up:fullstack {
+up:fullstack() {
     docker-compose --profile main build --parallel
     docker-compose --profile main up
 }
 
-function env:replace:prod {
+env:replace:prod() {
     ENV_FOR=prod bash ./scripts/replace_env.sh
 }
 
