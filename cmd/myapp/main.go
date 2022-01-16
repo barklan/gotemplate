@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/barklan/gotemplate/pkg/logging"
 )
 
 func handleSignals(sigs <-chan os.Signal) {
@@ -17,7 +18,13 @@ func handleSignals(sigs <-chan os.Signal) {
 }
 
 func main() {
-	log.Println("starting...")
+	lg := logging.Dev()
+	defer func() {
+		_ = lg.Sync()
+	}()
+
+	lg.Info("starting")
+
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 	go handleSignals(sigs)
