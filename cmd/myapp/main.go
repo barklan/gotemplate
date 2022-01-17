@@ -1,33 +1,20 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"os"
-	"os/signal"
-	"syscall"
-
 	"github.com/barklan/gotemplate/pkg/logging"
+	"github.com/barklan/gotemplate/pkg/system"
 )
 
-func handleSignals(sigs <-chan os.Signal) {
-	sig := <-sigs
-	log.Printf("received %s - exiting\n", sig)
-	fmt.Println(sig)
-	os.Exit(0)
-}
-
 func main() {
-	lg := logging.Dev()
+	go system.HandleSignals()
+	internalEnv, _ := system.GetInternalEnv()
+
+	lg := logging.New(internalEnv)
 	defer func() {
 		_ = lg.Sync()
 	}()
-
 	lg.Info("starting")
-
-	sigs := make(chan os.Signal, 1)
-	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
-	go handleSignals(sigs)
+	defer lg.Warn("main exited")
 
 	// Entry here
 }

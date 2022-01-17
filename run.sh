@@ -40,8 +40,8 @@ up:fullstack() {
     docker-compose --profile main up
 }
 
-env:replace:prod() {
-    ENV_FOR=prod bash ./scripts/replace_env.sh
+env:prod() {
+    ENV_FOR=prod bash ./scripts/build_env.sh
 }
 
 # -----------------------------------------------------------------------------

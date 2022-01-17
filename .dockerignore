@@ -1,5 +1,6 @@
 **/vendor
 **/.cache
+**/environment
 **/__pycache__
 **/.classpath
 **/.dockerignore
