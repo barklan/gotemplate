@@ -14,21 +14,29 @@ const (
 
 const InternalEnvKey = "INTERNAL_ENVIRONMENT"
 
-func GetInternalEnv() (InternalEnv, bool) {
-	v, ok := os.LookupEnv(InternalEnvKey)
-	if !ok {
-		log.Fatalf("%s not specified\n", InternalEnvKey)
+func (i InternalEnv) String() string {
+	switch i {
+	case DevEnv:
+		return "Development"
+	case ProdEnv:
+		return "Production"
+	default:
+		return "Undefined"
 	}
+}
+
+func GetInternalEnv() (InternalEnv, bool) {
 	var iEnv InternalEnv
+	v, _ := os.LookupEnv(InternalEnvKey)
 	switch v {
 	case "dev":
 		iEnv = DevEnv
 	case "prod":
 		iEnv = ProdEnv
 	default:
-		log.Fatalf("%s\n %q not recognized", InternalEnvKey, v)
+		iEnv = ProdEnv
 	}
-	log.Printf("%s is set to %q\n", InternalEnvKey, v)
+	log.Printf("Environment is set to %q\n", iEnv)
 
 	var inDocker bool
 	if os.Getenv("DOCKERIZED") == "true" {
