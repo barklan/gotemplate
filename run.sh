@@ -42,9 +42,17 @@ build:myapp() {
     -ldflags='-w -s -extldflags "-static"' -a -o ./.cache/myapp/myapp.exe ./cmd/myapp/.
 }
 
-up:fullstack() {
+up:compose() {
     docker-compose --profile main build --parallel
     docker-compose --profile main up
+}
+
+lint() {
+    go vet ./... && staticcheck ./... && golangci-lint run --enable-all --disable=wsl
+}
+
+test() {
+    go test -v -race ./...
 }
 
 env:prod() {

@@ -1,7 +1,6 @@
 package system
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -14,6 +13,5 @@ func HandleSignals() {
 
 	sig := <-sigs
 	log.Printf("received %s - exiting\n", sig)
-	fmt.Println(sig)
 	os.Exit(0)
 }

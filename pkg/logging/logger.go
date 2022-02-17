@@ -33,5 +33,6 @@ func Dev() *zap.Logger {
 
 func Prod() *zap.Logger {
 	log.Println("prod logger not implemented, falling back to dev")
+
 	return Dev()
 }

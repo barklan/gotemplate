@@ -43,5 +43,6 @@ func GetInternalEnv() (InternalEnv, bool) {
 		log.Println("running in container")
 		inDocker = true
 	}
+
 	return iEnv, inDocker
 }
