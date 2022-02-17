@@ -32,7 +32,7 @@ up() {
 
 up:myapp() {
     _use_env
-    go run cmd/myapp/main.go
+    go run cmd/myapp/main.go "${@}"
 }
 
 build:myapp() {
