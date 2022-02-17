@@ -48,7 +48,7 @@ up:compose() {
 }
 
 lint() {
-    go vet ./... && staticcheck ./... && golangci-lint run --enable-all --disable=wsl
+    go vet ./... && golangci-lint run --enable-all --disable=wsl
 }
 
 test() {
