@@ -27,7 +27,6 @@ RUN adduser \
     "${USER}"
 WORKDIR $GOPATH/src/mypackage/myapp/
 
-# use modules
 COPY go.mod go.sum ./
 
 # ENV GO111MODULE=on
@@ -38,8 +37,8 @@ RUN go mod verify
 COPY . .
 
 # Build the binary
-RUN --mount=type=cache,target=/root/.cache/go-build \
-    GOCACHE=/root/.cache/go-build \
+RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/go/pkg/mod \
+    GOCACHE=/root/.cache/go-build GOMODCACHE=/go/pkg/mod \
     CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GOGC=off go build \
     -ldflags='-w -s -extldflags "-static"' -a \
     -o /go/bin/app ./cmd/myapp/.
@@ -51,17 +50,13 @@ FROM scratch
 
 ENV DOCKERIZED=true
 
-# Import from builder.
 COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /etc/group /etc/group
 
-# Copy our static executable
 COPY --from=builder /go/bin/app /go/bin/app
 
-# Use an unprivileged user.
 USER appuser:appuser
 
-# Run the app binary.
 ENTRYPOINT ["/go/bin/app"]
