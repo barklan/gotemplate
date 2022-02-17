@@ -14,7 +14,7 @@ func main() {
 		_ = lg.Sync()
 	}()
 	lg.Info("starting")
-	defer lg.Warn("main exited")
+	defer lg.Info("exiting now")
 
 	// Entry here
 }
