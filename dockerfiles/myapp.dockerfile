@@ -28,7 +28,7 @@ RUN adduser \
 WORKDIR $GOPATH/src/mypackage/myapp/
 
 # use modules
-COPY go.mod .
+COPY go.mod go.sum ./
 
 # ENV GO111MODULE=on
 RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/go/pkg/mod \
@@ -39,6 +39,7 @@ COPY . .
 
 # Build the binary
 RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/go/pkg/mod \
+    GOCACHE=/root/.cache/go-build GOMODCACHE=/go/pkg/mod \
     CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GOGC=off go build \
     -ldflags='-w -s -extldflags "-static"' -a \
     -o /go/bin/app ./cmd/myapp/.
