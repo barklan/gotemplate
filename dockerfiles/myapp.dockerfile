@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.3
 ############################
 # STEP 1 build executable binary
 ############################
@@ -29,14 +30,16 @@ WORKDIR $GOPATH/src/mypackage/myapp/
 # use modules
 COPY go.mod .
 
-ENV GO111MODULE=on
-RUN go mod download
+# ENV GO111MODULE=on
+RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/go/pkg/mod \
+    go mod download
 RUN go mod verify
 
 COPY . .
 
 # Build the binary
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GOGC=off go build \
+RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/go/pkg/mod \
+    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GOGC=off go build \
     -ldflags='-w -s -extldflags "-static"' -a \
     -o /go/bin/app ./cmd/myapp/.
 
