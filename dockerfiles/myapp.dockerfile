@@ -4,7 +4,6 @@
 ############################
 ARG DOCKER_IMAGE_PREFIX=
 FROM ${DOCKER_IMAGE_PREFIX}golang:1.17.7-alpine as builder
-
 ARG BUILDKIT_INLINE_CACHE=1
 
 # Install git + SSL ca certificates.

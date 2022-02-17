@@ -8,6 +8,7 @@ services:
       dockerfile: dockerfiles/myapp.dockerfile
       args:
         DOCKER_IMAGE_PREFIX: ${DOCKER_IMAGE_PREFIX?Variable not set}
+        BUILDKIT_INLINE_CACHE: 1
     networks:
       - traefik-public
     env_file:
