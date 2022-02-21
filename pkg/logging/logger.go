@@ -25,7 +25,7 @@ func Dev() *zap.Logger {
 	zapConfig.EncoderConfig.TimeKey = ""
 	lg, err := zapConfig.Build()
 	if err != nil {
-		log.Fatal("failed to initialize logging")
+		log.Fatal("failed to initialize dev logger")
 	}
 
 	return lg
@@ -33,6 +33,10 @@ func Dev() *zap.Logger {
 
 func Prod() *zap.Logger {
 	log.Println("prod logger not implemented, falling back to dev")
+	lg, err := zap.NewProduction()
+	if err != nil {
+		log.Fatal("failed to initialize prod logger")
+	}
 
-	return Dev()
+	return lg
 }
