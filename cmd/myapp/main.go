@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/barklan/gotemplate/pkg/logging"
 	"github.com/barklan/gotemplate/pkg/system"
+	_ "go.uber.org/automaxprocs"
 )
 
 func main() {
