@@ -2,8 +2,10 @@ package main
 
 import (
 	"github.com/barklan/gotemplate/pkg/logging"
+	"github.com/barklan/gotemplate/pkg/myapp"
 	"github.com/barklan/gotemplate/pkg/system"
 	_ "go.uber.org/automaxprocs"
+	"go.uber.org/zap"
 )
 
 func main() {
@@ -17,5 +19,7 @@ func main() {
 	lg.Info("starting")
 	defer lg.Info("exiting now")
 
-	// Entry here
+	if err := myapp.Start(lg); err != nil {
+		lg.Panic("error in myapp", zap.Error(err))
+	}
 }
