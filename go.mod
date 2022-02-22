@@ -8,6 +8,7 @@ require (
 	github.com/go-chi/render v1.0.1
 	github.com/go-redis/redis/v8 v8.11.4
 	github.com/golang-migrate/migrate/v4 v4.15.1
+	github.com/google/wire v0.5.0
 	github.com/hashicorp/golang-lru v0.5.1
 	github.com/jackc/pgx/v4 v4.15.0
 	github.com/joho/godotenv v1.3.0

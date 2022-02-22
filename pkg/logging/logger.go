@@ -8,6 +8,11 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
+func NewAuto() *zap.Logger {
+	internalEnv, _ := system.GetInternalEnv()
+	return New(internalEnv)
+}
+
 func New(iEnv system.InternalEnv) *zap.Logger {
 	switch iEnv {
 	case system.DevEnv:

@@ -19,7 +19,7 @@ type PublicCtrl struct {
 	log  *zap.Logger
 	db   *pgxpool.Pool
 	fc   caching.FastCache
-	conf config.Config
+	conf *config.Config
 }
 
 func (c *PublicCtrl) internalError(w http.ResponseWriter, msg string, err error) {
@@ -27,7 +27,7 @@ func (c *PublicCtrl) internalError(w http.ResponseWriter, msg string, err error)
 	http.Error(w, msg, http.StatusInternalServerError)
 }
 
-func NewCtrl(lg *zap.Logger, conf config.Config, db *pgxpool.Pool, fCache caching.FastCache) *PublicCtrl {
+func NewCtrl(lg *zap.Logger, conf *config.Config, db *pgxpool.Pool, fCache caching.FastCache) *PublicCtrl {
 	return &PublicCtrl{
 		log:  lg,
 		db:   db,

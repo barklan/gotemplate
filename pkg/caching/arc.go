@@ -1,13 +1,16 @@
 package caching
 
-import lru "github.com/hashicorp/golang-lru"
+import (
+	"github.com/barklan/gotemplate/pkg/myapp/config"
+	lru "github.com/hashicorp/golang-lru"
+)
 
 type ArcCache struct {
 	cl *lru.ARCCache
 }
 
-func NewArc(size int) (*ArcCache, error) {
-	arc, err := lru.NewARC(size)
+func NewArc(conf *config.Config) (FastCache, error) {
+	arc, err := lru.NewARC(conf.FastCacheSize)
 	return &ArcCache{cl: arc}, err
 }
 

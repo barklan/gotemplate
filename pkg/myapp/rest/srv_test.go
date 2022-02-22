@@ -24,7 +24,7 @@ func MockCtrl() (*PublicCtrl, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to open test db conn: %w", err)
 	}
-	fc, err := caching.NewArc(2)
+	fc, err := caching.NewArc(conf)
 	if err != nil {
 		return nil, fmt.Errorf("faield to init arc cache: %w", err)
 	}

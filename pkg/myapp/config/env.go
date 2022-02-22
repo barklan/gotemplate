@@ -5,11 +5,11 @@ import (
 )
 
 type Config struct {
-	MyAppEnv string `env:"MY_APP_ENV"`
+	FastCacheSize int `env:"MYAPP_FAST_CACHE_SIZE"`
 }
 
-func Read() (Config, error) {
+func Read() (*Config, error) {
 	cfg := Config{}
 	err := env.Parse(&cfg)
-	return cfg, err
+	return &cfg, err
 }

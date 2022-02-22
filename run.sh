@@ -42,6 +42,11 @@ build:myapp() {
     -ldflags='-w -s -extldflags "-static"' -a -o ./.cache/myapp/myapp.exe ./cmd/myapp/.
 }
 
+wire:myapp() {
+    go install github.com/google/wire/cmd/wire@latest
+    cd ./cmd/myapp && wire
+}
+
 up:compose() {
     docker-compose --profile main build --parallel
     docker-compose --profile main up

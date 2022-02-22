@@ -15,8 +15,6 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
-// var DB *pgx.Conn // nolint:gochecknoglobals
-
 func PrepareDB(migrationsPath string) (string, *dockertest.Pool, *dockertest.Resource) {
 	var db *sql.DB
 	pool, err := dockertest.NewPool("")
