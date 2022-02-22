@@ -5,16 +5,11 @@ import (
 	"time"
 )
 
-var (
-	ctx               = context.TODO()
-	variableKeySymbol = "."
-)
+var ctx = context.TODO()
 
 type Cache interface {
 	Set(string, interface{}, time.Duration) error
 	Get(string) ([]byte, bool, error)
-	SetVar(string, string, interface{}, time.Duration) error
-	GetVar(string, string) ([]byte, bool, error)
 }
 
 type FastCache interface {

@@ -18,10 +18,10 @@ func TestHelloHandler(t *testing.T) {
 	w := httptest.NewRecorder()
 	c.helloHandler(w, req)
 	res := w.Result()
+	defer res.Body.Close()
 	if res.StatusCode != 200 {
 		t.Errorf("status code is %d", res.StatusCode)
 	}
-	defer res.Body.Close()
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("expected error to be nil got %v", err)

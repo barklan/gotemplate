@@ -10,7 +10,11 @@ type ArcCache struct {
 }
 
 func NewArc(conf *config.Config) (FastCache, error) {
-	arc, err := lru.NewARC(conf.FastCacheSize)
+	size := conf.FastCacheSize
+	if size <= 0 {
+		size = 10
+	}
+	arc, err := lru.NewARC(size)
 	return &ArcCache{cl: arc}, err
 }
 

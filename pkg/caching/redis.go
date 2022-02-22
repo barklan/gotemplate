@@ -2,7 +2,6 @@ package caching
 
 import (
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/caarlos0/env"
@@ -55,18 +54,4 @@ func (r *Redis) Get(key string) ([]byte, bool, error) {
 	} else {
 		return []byte(val), true, nil
 	}
-}
-
-func (r *Redis) SetVar(namespace, variable string, val interface{}, ttl time.Duration) error {
-	fullKey := strings.Join([]string{namespace, variable}, variableKeySymbol)
-	return r.Set(fullKey, val, ttl)
-}
-
-func (r *Redis) GetVar(namespace, variable string) ([]byte, bool, error) {
-	fullKey := strings.Join([]string{namespace, variable}, variableKeySymbol)
-	return r.Get(fullKey)
-}
-
-func (r *Redis) GC() error {
-	return nil
 }
