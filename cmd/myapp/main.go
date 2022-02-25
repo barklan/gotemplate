@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+	log.Println("starting myapp")
 	go system.HandleSignals()
 	app, err := InitApp()
 	if err != nil {
