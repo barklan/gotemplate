@@ -53,11 +53,11 @@ up:compose() {
 }
 
 lint() {
-    go vet ./... && golangci-lint run --enable-all --disable=wsl
+    golangci-lint run --enable-all  --disable=wsl,varnamelen,testpackage,gomnd,exhaustivestruct
 }
 
 test() {
-    go test -v -race ./...
+    go test -v -race -cover ./...
 }
 
 env:prod() {
