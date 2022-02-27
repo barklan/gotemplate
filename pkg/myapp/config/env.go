@@ -12,7 +12,9 @@ type Config struct {
 
 func Read() (*Config, error) {
 	cfg := Config{}
-	err := env.Parse(&cfg)
+	if err := env.Parse(&cfg); err != nil {
+		return nil, fmt.Errorf("failed to parse config from env vars: %w", err)
+	}
 
-	return &cfg, fmt.Errorf("failed to read config file: %w", err)
+	return &cfg, nil
 }

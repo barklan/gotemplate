@@ -39,7 +39,6 @@ func TestMain(m *testing.M) {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-
 	_, pool, resource := dbtest.PrepareDB("../../../db/migrations")
 
 	code := m.Run()

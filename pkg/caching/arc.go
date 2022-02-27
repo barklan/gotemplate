@@ -17,8 +17,11 @@ func NewArc(conf *config.Config) (*ArcCache, error) {
 		size = 10
 	}
 	arc, err := lru.NewARC(size)
+	if err != nil {
+		return nil, fmt.Errorf("failed to init arc cache: %w", err)
+	}
 
-	return &ArcCache{cl: arc}, fmt.Errorf("failed to init arc cache: %w", err)
+	return &ArcCache{cl: arc}, nil
 }
 
 func (a *ArcCache) Set(key interface{}, val interface{}) {
