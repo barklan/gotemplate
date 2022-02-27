@@ -58,5 +58,9 @@ func (c *PublicCtrl) Serve() error {
 
 	c.log.Info("myapp rest server is listening", zap.Int64("port", port))
 
-	return http.ListenAndServe(fmt.Sprintf(":%d", port), r)
+	if err := http.ListenAndServe(fmt.Sprintf(":%d", port), r); err != nil {
+		return fmt.Errorf("failed to listen and serve: %w", err)
+	}
+
+	return nil
 }

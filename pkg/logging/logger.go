@@ -10,6 +10,7 @@ import (
 
 func NewAuto() *zap.Logger {
 	internalEnv, _ := system.GetInternalEnv()
+
 	return New(internalEnv)
 }
 

@@ -9,13 +9,14 @@ import (
 
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
-	"github.com/ory/dockertest/v3"
+	"github.com/ory/dockertest/v3" //nolint
 	"github.com/ory/dockertest/v3/docker"
 
+	// migrations.
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
-func PrepareDB(migrationsPath string) (string, *dockertest.Pool, *dockertest.Resource) {
+func PrepareDB(migrationsPath string) (string, *dockertest.Pool, *dockertest.Resource) { //nolint:funlen
 	var db *sql.DB
 	pool, err := dockertest.NewPool("")
 	if err != nil {
@@ -47,7 +48,7 @@ func PrepareDB(migrationsPath string) (string, *dockertest.Pool, *dockertest.Res
 	os.Setenv("POSTGRES_USER", "postgres")
 
 	hostAndPort := resource.GetHostPort("5432/tcp")
-	databaseUrl := fmt.Sprintf(
+	databaseURL := fmt.Sprintf(
 		"postgres://postgres:postgres@%s/app?sslmode=disable",
 		hostAndPort,
 	)
@@ -57,14 +58,18 @@ func PrepareDB(migrationsPath string) (string, *dockertest.Pool, *dockertest.Res
 		log.Fatalf("failed to set expiration on container: %v", err)
 	}
 
-	log.Printf("connecting to database on %q\n", databaseUrl)
+	log.Printf("connecting to database on %q\n", databaseURL)
 	pool.MaxWait = 180 * time.Second
 	if err = pool.Retry(func() error {
-		db, err = sql.Open("postgres", databaseUrl)
+		db, err = sql.Open("postgres", databaseURL)
 		if err != nil {
-			return err
+			return fmt.Errorf("failed to open database connection: %w", err)
 		}
-		return db.Ping()
+		if err = db.Ping(); err != nil {
+			return fmt.Errorf("failed to ping database: %w", err)
+		}
+
+		return nil
 	}); err != nil {
 		log.Fatalf("Could not connect to docker: %s", err)
 	}
@@ -79,5 +84,5 @@ func PrepareDB(migrationsPath string) (string, *dockertest.Pool, *dockertest.Res
 		log.Fatalf("failed to migrate database: %v", err)
 	}
 
-	return databaseUrl, pool, resource
+	return databaseURL, pool, resource
 }

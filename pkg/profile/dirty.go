@@ -6,7 +6,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// To use: defer profile.Duration(time.Now(), "IntFactorial")
+// To use: defer profile.Duration(time.Now(), "IntFactorial").
 func Duration(lg *zap.Logger, invocation time.Time, name string) {
 	elapsed := time.Since(invocation)
 

@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (c *PublicCtrl) helloHandler(w http.ResponseWriter, r *http.Request) {
+func (c *PublicCtrl) helloHandler(w http.ResponseWriter, r *http.Request) { //nolint:unparam
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	_, err := c.db.Exec(
@@ -21,12 +21,14 @@ func (c *PublicCtrl) helloHandler(w http.ResponseWriter, r *http.Request) {
 	)
 	if err != nil {
 		c.internalError(w, "failed to exec query", err)
+
 		return
 	}
 
 	resp, err := json.Marshal(map[string]string{"hello": "world"})
 	if err != nil {
 		http.Error(w, "failed to marshal response", 500)
+
 		return
 	}
 	w.WriteHeader(http.StatusOK)

@@ -14,5 +14,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("app initialization failed: %v", err)
 	}
-	app.Serve()
+	if err := app.Serve(); err != nil {
+		log.Panic(err)
+	}
 }

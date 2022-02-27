@@ -1,6 +1,7 @@
 package caching
 
 import (
+	"context"
 	"fmt"
 	"time"
 
@@ -41,17 +42,19 @@ func (r *Redis) Set(key string, val interface{}, ttl time.Duration) error {
 	if ttl < 0 {
 		ttl = 0
 	}
-	err := r.cl.Set(ctx, key, val, ttl).Err()
-	return err
+	err := r.cl.Set(context.Background(), key, val, ttl).Err()
+
+	return fmt.Errorf("failed to set value to redis: %w", err)
 }
 
 func (r *Redis) Get(key string) ([]byte, bool, error) {
-	val, err := r.cl.Get(ctx, key).Result()
-	if err == redis.Nil {
+	val, err := r.cl.Get(context.Background(), key).Result()
+	switch {
+	case err == redis.Nil: //nolint
 		return []byte{}, false, nil
-	} else if err != nil {
-		return []byte{}, false, err
-	} else {
+	case err != nil:
+		return []byte{}, false, fmt.Errorf("failed to set key to redis: %w", err)
+	default:
 		return []byte(val), true, nil
 	}
 }

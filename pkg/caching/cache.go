@@ -1,11 +1,8 @@
 package caching
 
 import (
-	"context"
 	"time"
 )
-
-var ctx = context.TODO()
 
 type Cache interface {
 	Set(string, interface{}, time.Duration) error

@@ -9,6 +9,7 @@ import (
 )
 
 func TestHelloHandler(t *testing.T) {
+	t.Parallel()
 	c, err := MockCtrl()
 	if err != nil {
 		t.Errorf("failed to construct mock controller: %v", err)
