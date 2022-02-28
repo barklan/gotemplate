@@ -17,10 +17,11 @@ func TestMain(m *testing.M) {
 		log.Fatal("failed to init zap logger")
 	}
 
-	_, err = Conn(lg)
+	conn, err := Conn(lg)
 	if err != nil {
 		log.Fatalf("failed to connect to database")
 	}
+	defer conn.Close()
 
 	code := m.Run()
 

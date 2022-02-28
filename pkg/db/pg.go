@@ -43,12 +43,5 @@ func Conn(lg *zap.Logger) (*pgxpool.Pool, error) {
 		return nil, fmt.Errorf("unable to connect to database: %w", err)
 	}
 
-	for i := 0; i < 10; i++ {
-		conn, err = pgxpool.ConnectConfig(context.Background(), config)
-		if err != nil {
-			return nil, fmt.Errorf("unable to connect to database: %w", err)
-		}
-	}
-
 	return conn, nil
 }
