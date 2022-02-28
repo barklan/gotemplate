@@ -3,7 +3,9 @@ package db
 import (
 	"context"
 	"fmt"
+	"time"
 
+	retry "github.com/avast/retry-go/v4"
 	"github.com/caarlos0/env"
 	"github.com/jackc/pgx/v4/log/zapadapter"
 	"github.com/jackc/pgx/v4/pgxpool"
@@ -31,9 +33,21 @@ func Conn(lg *zap.Logger) (*pgxpool.Pool, error) {
 	}
 	config.ConnConfig.Logger = zapadapter.NewLogger(lg)
 
-	conn, err := pgxpool.ConnectConfig(context.Background(), config)
-	if err != nil {
+	var conn *pgxpool.Pool
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
+	defer cancel()
+	if err = retry.Do(func() error {
+		conn, err = pgxpool.ConnectConfig(context.Background(), config)
+		return err
+	}, retry.Context(ctx), retry.Delay(1*time.Second)); err != nil {
 		return nil, fmt.Errorf("unable to connect to database: %w", err)
+	}
+
+	for i := 0; i < 10; i++ {
+		conn, err = pgxpool.ConnectConfig(context.Background(), config)
+		if err != nil {
+			return nil, fmt.Errorf("unable to connect to database: %w", err)
+		}
 	}
 
 	return conn, nil
