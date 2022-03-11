@@ -38,7 +38,6 @@ func Dev() *zap.Logger {
 }
 
 func Prod() *zap.Logger {
-	log.Println("prod logger not implemented, falling back to dev")
 	lg, err := zap.NewProduction()
 	if err != nil {
 		log.Fatal("failed to initialize prod logger")
