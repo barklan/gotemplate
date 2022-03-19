@@ -3,7 +3,7 @@
 # STEP 1 build executable binary
 ############################
 ARG DOCKER_IMAGE_PREFIX=
-FROM ${DOCKER_IMAGE_PREFIX}golang:1.17.7-alpine as builder
+FROM ${DOCKER_IMAGE_PREFIX}golang:1.18-alpine as builder
 ARG BUILDKIT_INLINE_CACHE=1
 
 # Install git + SSL ca certificates.
@@ -29,7 +29,7 @@ COPY go.mod go.sum ./
 
 # ENV GO111MODULE=on
 RUN --mount=type=cache,target=/go/pkg/mod \
-    GOMODCACHE=/go/pkg/mod go mod download
+    GOMODCACHE=/go/pkg/mod go mod download all
 RUN go mod verify
 
 COPY . .

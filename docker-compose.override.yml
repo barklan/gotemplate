@@ -3,6 +3,8 @@ version: "3.8"
 services:
   myapp:
     profiles: [ "main" ]
+  db:
+    profiles: [ "main" ]
 
 networks:
   traefik-public:

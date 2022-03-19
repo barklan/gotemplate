@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -39,12 +40,16 @@ func TestMain(m *testing.M) {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-	_, pool, resource := dbtest.PrepareDB("../../../db/migrations")
 
-	code := m.Run()
-	if err := pool.Purge(resource); err != nil {
-		log.Fatalf("Could not purge resource: %s", err)
+	flag.Parse()
+	if testing.Short() {
+		os.Exit(m.Run())
+	} else {
+		_, pool, resource := dbtest.PrepareDB("../../../db/migrations")
+		code := m.Run()
+		if err := pool.Purge(resource); err != nil {
+			log.Fatalf("Could not purge resource: %s", err)
+		}
+		os.Exit(code)
 	}
-
-	os.Exit(code)
 }

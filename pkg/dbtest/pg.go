@@ -31,7 +31,7 @@ func PrepareDB(migrationsPath string) (string, *dockertest.Pool, *dockertest.Res
 			Env: []string{
 				"POSTGRES_PASSWORD=postgres",
 				"POSTGRES_USER=postgres",
-				"POSTGRES_DB=app",
+				"POSTGRES_DB=postgres",
 				"listen_addresses = '*'",
 			},
 		},
@@ -43,16 +43,20 @@ func PrepareDB(migrationsPath string) (string, *dockertest.Pool, *dockertest.Res
 	if err != nil {
 		log.Fatalf("Could not start resource: %s", err)
 	}
-	os.Setenv("POSTGRES_DB", "app")
+	os.Setenv("POSTGRES_DB", "postgres")
 	os.Setenv("POSTGRES_PASSWORD", "postgres")
 	os.Setenv("POSTGRES_USER", "postgres")
 
 	hostAndPort := resource.GetHostPort("5432/tcp")
 	databaseURL := fmt.Sprintf(
-		"postgres://postgres:postgres@%s/app?sslmode=disable",
+		"postgres://postgres:postgres@%s/postgres?sslmode=disable",
 		hostAndPort,
 	)
-	os.Setenv("POSTGRES_HOST_AND_PORT", hostAndPort)
+
+	host := resource.GetBoundIP("5432/tcp")
+	port := resource.GetPort("5432/tcp")
+	os.Setenv("POSTGRES_HOST", host)
+	os.Setenv("POSTGRES_PORT", port)
 
 	if err = resource.Expire(30); err != nil {
 		log.Fatalf("failed to set expiration on container: %v", err)

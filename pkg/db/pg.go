@@ -16,7 +16,8 @@ type PGConnectionData struct {
 	DB       string `env:"POSTGRES_DB"`
 	Password string `env:"POSTGRES_PASSWORD"`
 	User     string `env:"POSTGRES_USER"`
-	Host     string `env:"POSTGRES_HOST_AND_PORT"`
+	Host     string `env:"POSTGRES_HOST"`
+	Port     int    `env:"POSTGRES_PORT"`
 }
 
 // It's up to the caller to close connection.
@@ -25,7 +26,7 @@ func Conn(lg *zap.Logger) (*pgxpool.Pool, error) {
 	if err := env.Parse(&cfg); err != nil {
 		return nil, fmt.Errorf("unable to parse postgres env vars: %w", err)
 	}
-	url := fmt.Sprintf("postgres://%s:%s@%s/%s", cfg.User, cfg.Password, cfg.Host, cfg.DB)
+	url := fmt.Sprintf("postgres://%s:%s@%s:%d/%s", cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.DB)
 
 	config, err := pgxpool.ParseConfig(url)
 	if err != nil {

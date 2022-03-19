@@ -9,6 +9,9 @@ import (
 )
 
 func TestHelloHandler(t *testing.T) {
+	if testing.Short() {
+		return
+	}
 	t.Parallel()
 	c, err := MockCtrl()
 	if err != nil {
