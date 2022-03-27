@@ -11,6 +11,9 @@ repos:
       - id: check-toml
       - id: check-yaml
       - id: detect-private-key
+      - id: check-json
+      - id: check-case-conflict
+      # - id: no-commit-to-branch
       - id: mixed-line-ending
         args: ["--fix=no"]
   - repo: https://github.com/commitizen-tools/commitizen
@@ -57,6 +60,11 @@ repos:
         language: docker_image
         entry: dotenvlinter/dotenv-linter --recursive
         files: \.env$
+      - id: openapi-linter
+        name: validate openapi schema
+        language: docker_image
+        entry: p1c2u/openapi-spec-validator docs/openapi.yml
+        files: ^docs/openapi.yml$
 ci:
   autofix_commit_msg: |
     [pre-commit.ci] auto fixes from pre-commit.com hooks
