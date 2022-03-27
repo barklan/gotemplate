@@ -48,7 +48,7 @@ up:compose() {
 }
 
 lint() {
-    golangci-lint run --enable-all  --disable=wsl,varnamelen,testpackage,gomnd,exhaustivestruct
+    golangci-lint run --enable-all --disable=wsl,varnamelen,testpackage,gomnd,exhaustivestruct
 }
 
 test() {
