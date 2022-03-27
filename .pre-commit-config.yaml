@@ -36,6 +36,19 @@ repos:
     rev: v2.9.3
     hooks:
       - id: hadolint
+  - repo: local
+    hooks:
+      - id: golang-filenames
+        name: check go filenames
+        entry: go filenames must be snake-case
+        language: fail
+        files: '[a-z0-9_/]*[^a-z0-9_/]+[a-z0-9_]*\.go$'
+      - id: go-test
+        name: go test
+        description: Runs `go test` and asserts no tests are failing.
+        entry: scripts/hooks/go-test.sh
+        language: script
+        files: \.go$
 ci:
   autofix_commit_msg: |
     [pre-commit.ci] auto fixes from pre-commit.com hooks
