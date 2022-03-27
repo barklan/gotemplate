@@ -7,7 +7,7 @@ import (
 )
 
 type Config struct {
-	FastCacheSize int `env:"MYAPP_FAST_CACHE_SIZE"`
+	Secret string `env:"MYAPP_SECRET"`
 }
 
 func Read() (*Config, error) {

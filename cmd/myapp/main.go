@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/barklan/gotemplate/pkg/logging"
 	"github.com/barklan/gotemplate/pkg/system"
 	_ "go.uber.org/automaxprocs"
 )
@@ -10,11 +11,13 @@ import (
 func main() {
 	log.Println("starting myapp")
 	go system.HandleSignals()
-	app, err := InitApp()
-	if err != nil {
-		log.Fatalf("app initialization failed: %v", err)
-	}
-	if err := app.Serve(); err != nil {
-		log.Panic(err)
-	}
+
+	logger := logging.NewAuto()
+	// conf, err := config.Read()
+	// if err != nil {
+	// 	log.Panicf("failed to read config: %v\n", err)
+	// }
+
+	// Start app here
+	logger.Info("main exited")
 }
