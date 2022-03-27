@@ -1,0 +1,25 @@
+name: docs-lint
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  openapi:
+    runs-on: ubuntu-latest
+    container: node:17-alpine
+
+    steps:
+
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Lint Schema
+        run: |
+          if ls docs/openapi.yml
+          then
+            echo "openapi schema found"
+            npx @redocly/openapi-cli lint docs/openapi.yml
+          else
+            echo "No openapi schema found!"
+          fi

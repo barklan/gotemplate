@@ -77,7 +77,7 @@ repos:
       - id: openapi-linter
         name: validate openapi schema
         language: docker_image
-        entry: p1c2u/openapi-spec-validator docs/openapi.yml
+        entry: redocly/openapi-cli lint docs/openapi.yml
         files: ^docs/openapi.yml$
 ci:
   autofix_commit_msg: |
