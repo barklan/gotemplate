@@ -25,11 +25,12 @@ repos:
     rev: v0.17.0
     hooks:
       - id: gitlint
+        args: ["--ignore=body-is-missing", "--msg-filename"]
   - repo: https://github.com/codespell-project/codespell
     rev: v2.1.0
     hooks:
       - id: codespell
-        exclude: '^go.sum'
+        exclude: "^go.sum"
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.2.0
     hooks:
@@ -89,5 +90,5 @@ ci:
   autoupdate_commit_msg: "[pre-commit.ci] pre-commit autoupdate"
   autoupdate_schedule: weekly
   # These require either docker or docker-compose.
-  skip: [dotenv-linter,openapi-linter,docker-compose-check]
+  skip: [dotenv-linter, openapi-linter, docker-compose-check]
   submodules: false

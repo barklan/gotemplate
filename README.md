@@ -52,7 +52,7 @@ pre-commit:
     - when: never
   image: registry.gitlab.com/.../docker-pre-commit
   script:
-    - PRE_COMMIT_HOME=$CI_PROJECT_DIR/.cache/pre-commit pre-commit run --all-files
+    - PRE_COMMIT_HOME=$CI_PROJECT_DIR/.cache/pre-commit SKIP=docker-compose-check,openapi-linter,dotenv-linter pre-commit run --all-files
   cache:
     paths:
       - $CI_PROJECT_DIR/.cache
