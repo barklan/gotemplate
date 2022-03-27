@@ -36,6 +36,11 @@ repos:
     rev: v2.9.3
     hooks:
       - id: hadolint
+  - repo: https://github.com/barklan/git-hooks
+    rev: v0.0.17
+    hooks:
+      - id: go-test
+      - id: forbid-binary
   - repo: local
     hooks:
       - id: golang-filenames
@@ -43,12 +48,6 @@ repos:
         entry: go filenames must be snake-case
         language: fail
         files: '[a-z0-9_/]*[^a-z0-9_/]+[a-z0-9_]*\.go$'
-      - id: go-test
-        name: go test
-        description: Runs `go test` and asserts no tests are failing.
-        entry: scripts/hooks/go-test.sh
-        language: script
-        files: \.go$
       - id: dotenv-linter
         name: run dotenv linter
         language: docker_image
