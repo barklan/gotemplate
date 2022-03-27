@@ -1,4 +1,4 @@
-name: golang-tests
+name: pre-commit
 on:
   push:
     branches: [ main ]
