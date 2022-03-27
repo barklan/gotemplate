@@ -21,6 +21,10 @@ repos:
     hooks:
       - id: commitizen
         stages: [commit-msg]
+  - repo: https://github.com/jorisroovers/gitlint
+    rev: v0.17.0
+    hooks:
+      - id: gitlint
   - repo: https://github.com/codespell-project/codespell
     rev: v2.1.0
     hooks:
