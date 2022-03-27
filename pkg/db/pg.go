@@ -39,7 +39,8 @@ func Conn(lg *zap.Logger) (*pgxpool.Pool, error) {
 	defer cancel()
 	if err = retry.Do(func() error {
 		conn, err = pgxpool.ConnectConfig(context.Background(), config)
-		return err
+
+		return fmt.Errorf("failed to connect: %w", err)
 	}, retry.Context(ctx), retry.Delay(1*time.Second)); err != nil {
 		return nil, fmt.Errorf("unable to connect to database: %w", err)
 	}
