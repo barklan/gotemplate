@@ -1,4 +1,4 @@
-name: e2e-url-checker
+name: e2e-tests
 on:
   schedule:
     - cron: '0 0 * * *'
@@ -12,7 +12,7 @@ jobs:
     steps:
 
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Go
         uses: actions/setup-go@v2

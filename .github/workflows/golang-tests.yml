@@ -1,4 +1,4 @@
-name: main-workflow
+name: golang-tests
 on:
   push:
     branches: [ main ]
@@ -10,7 +10,7 @@ jobs:
     steps:
 
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Go
         uses: actions/setup-go@v2
