@@ -12,6 +12,7 @@ repos:
       - id: detect-private-key
       - id: check-shebang-scripts-are-executable
       - id: check-json
+        exclude: ".vscode/tasks.json"
       - id: check-case-conflict
       # - id: no-commit-to-branch
       - id: mixed-line-ending
