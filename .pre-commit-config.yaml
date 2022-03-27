@@ -44,10 +44,11 @@ repos:
     hooks:
       - id: hadolint
   - repo: https://github.com/barklan/git-hooks
-    rev: v0.0.17
+    rev: v0.0.20
     hooks:
       - id: go-test
       - id: forbid-binary
+      - id: docker-compose-check
   - repo: https://github.com/sqlfluff/sqlfluff
     rev: 0.11.2
     hooks:
