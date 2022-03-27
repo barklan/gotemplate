@@ -1,4 +1,3 @@
-exclude: '^go.sum'
 default_stages: [commit]
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -29,12 +28,15 @@ repos:
     rev: v2.1.0
     hooks:
       - id: codespell
-        args:
-          - "--skip=\"go.sum\""
+        exclude: '^go.sum'
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.2.0
     hooks:
       - id: detect-secrets
+  - repo: https://github.com/zricethezav/gitleaks
+    rev: v8.5.1
+    hooks:
+      - id: gitleaks
   - repo: https://github.com/yoheimuta/protolint
     rev: v0.37.1
     hooks:
@@ -53,6 +55,12 @@ repos:
     rev: 0.11.2
     hooks:
       - id: sqlfluff-lint
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.14.1
+    hooks:
+      - id: check-github-workflows
+      - id: check-gitlab-ci
+      - id: check-github-actions
   - repo: local
     hooks:
       - id: golang-filenames
