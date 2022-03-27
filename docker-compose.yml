@@ -9,29 +9,16 @@ services:
       args:
         DOCKER_IMAGE_PREFIX: ${DOCKER_IMAGE_PREFIX?Variable not set}
         BUILDKIT_INLINE_CACHE: 1
-    networks:
-      - traefik-public
-    env_file:
-      - ./.env
-  db:
-    image: '${DOCKER_IMAGE_PREFIX?Variable not set}postgres:14'
-    # restart: on-fali
     volumes:
-      - app-db-data:/var/lib/postgresql/data/pgdata
-    env_file:
-      - ./.env
-    environment:
-      - PGDATA=/var/lib/postgresql/data/pgdata
-      # THIS IS UNSAFE!
-      - POSTGRES_HOST_AUTH_METHOD=trust
+      - myapp-data:/data
     networks:
       - traefik-public
-    ports:
-      - 5432:5432
+    env_file:
+      - ./.env
 
 networks:
   traefik-public:
     external: true
 
 volumes:
-  app-db-data:
+  myapp-data:
