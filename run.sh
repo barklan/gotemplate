@@ -55,6 +55,10 @@ test() {
     go test -v -race -cover ./...
 }
 
+test:e2e() {
+    go test -v -race -tags e2e ./...
+}
+
 env:prod() {
     ENV_FOR=prod bash ./scripts/build_env.sh
 }

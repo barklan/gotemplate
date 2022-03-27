@@ -1,20 +1,19 @@
+// Package logging constructs zap loggers for different environments.
 package logging
 
 import (
-	"log"
-
 	"github.com/barklan/gotemplate/pkg/system"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
-func NewAuto() *zap.Logger {
+func NewAuto() (*zap.Logger, error) {
 	internalEnv, _ := system.GetInternalEnv()
 
 	return New(internalEnv)
 }
 
-func New(iEnv system.InternalEnv) *zap.Logger {
+func New(iEnv system.InternalEnv) (*zap.Logger, error) {
 	switch iEnv {
 	case system.DevEnv:
 		return Dev()
@@ -25,23 +24,13 @@ func New(iEnv system.InternalEnv) *zap.Logger {
 	}
 }
 
-func Dev() *zap.Logger {
+func Dev() (*zap.Logger, error) {
 	zapConfig := zap.NewDevelopmentConfig()
 	zapConfig.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 	zapConfig.EncoderConfig.TimeKey = ""
-	lg, err := zapConfig.Build()
-	if err != nil {
-		log.Fatal("failed to initialize dev logger")
-	}
-
-	return lg
+	return zapConfig.Build()
 }
 
-func Prod() *zap.Logger {
-	lg, err := zap.NewProduction()
-	if err != nil {
-		log.Fatal("failed to initialize prod logger")
-	}
-
-	return lg
+func Prod() (*zap.Logger, error) {
+	return zap.NewProduction()
 }

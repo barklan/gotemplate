@@ -4,7 +4,13 @@ import (
 	"os"
 	"reflect"
 	"testing"
+
+	"go.uber.org/goleak"
 )
+
+func TestMain(m *testing.M) {
+	goleak.VerifyTestMain(m)
+}
 
 func TestRead(t *testing.T) {
 	t.Parallel()

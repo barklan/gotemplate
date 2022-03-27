@@ -12,7 +12,10 @@ func main() {
 	log.Println("starting myapp")
 	go system.HandleSignals()
 
-	logger := logging.NewAuto()
+	logger, err := logging.NewAuto()
+	if err != nil {
+		log.Fatalf("failed to init logger: %v\n", err)
+	}
 	// conf, err := config.Read()
 	// if err != nil {
 	// 	log.Panicf("failed to read config: %v\n", err)
