@@ -49,6 +49,11 @@ repos:
         entry: scripts/hooks/go-test.sh
         language: script
         files: \.go$
+      - id: dotenv-linter
+        name: run dotenv linter
+        language: docker_image
+        entry: dotenvlinter/dotenv-linter --recursive
+        files: \.env$
 ci:
   autofix_commit_msg: |
     [pre-commit.ci] auto fixes from pre-commit.com hooks
