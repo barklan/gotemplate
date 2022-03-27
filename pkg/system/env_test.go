@@ -7,7 +7,7 @@ import (
 	"go.uber.org/goleak"
 )
 
-func TestMain(m *testing.M) { //nolint:interfacer
+func TestMain(m *testing.M) {
 	goleak.VerifyTestMain(m)
 }
 

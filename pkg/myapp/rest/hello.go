@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (c *PublicCtrl) helloHandler(w http.ResponseWriter, r *http.Request) { //nolint:unparam
+func (c *PublicCtrl) helloHandler(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	_, err := c.db.Exec(
