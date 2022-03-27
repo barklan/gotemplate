@@ -41,6 +41,10 @@ repos:
     hooks:
       - id: go-test
       - id: forbid-binary
+  - repo: https://github.com/sqlfluff/sqlfluff
+    rev: 0.11.2
+    hooks:
+      - id: sqlfluff-lint
   - repo: local
     hooks:
       - id: golang-filenames
