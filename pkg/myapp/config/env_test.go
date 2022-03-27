@@ -16,8 +16,8 @@ func TestRead(t *testing.T) {
 	}{
 		{
 			"test env var",
-			map[string]string{"MYAPP_SECRET": "supersecretkey"},
-			&Config{Secret: "supersecretkey"},
+			map[string]string{"MYAPP_SECRET": "supersecretkey"}, // pragma: allowlist secret
+			&Config{Secret: "supersecretkey"},                   // pragma: allowlist secret
 			false,
 		},
 	}
