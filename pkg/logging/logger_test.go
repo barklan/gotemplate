@@ -1,9 +1,11 @@
 // Package logging constructs zap loggers for different environments.
-package logging
+package logging_test
 
 import (
 	"os"
 	"testing"
+
+	"github.com/barklan/gotemplate/pkg/logging"
 )
 
 func TestNewAuto(t *testing.T) {
@@ -28,7 +30,7 @@ func TestNewAuto(t *testing.T) {
 			for k, v := range tt.envVars {
 				os.Setenv(k, v)
 			}
-			if _, err := NewAuto(); err != nil {
+			if _, err := logging.NewAuto(); err != nil {
 				t.Fatalf("error when constructing logger: %v\n", err)
 			}
 		})

@@ -12,11 +12,7 @@ import (
 func NewAuto() (*zap.Logger, error) {
 	internalEnv, _ := system.GetInternalEnv()
 
-	return New(internalEnv)
-}
-
-func New(iEnv system.InternalEnv) (*zap.Logger, error) {
-	switch iEnv {
+	switch internalEnv {
 	case system.DevEnv:
 		return Dev()
 	case system.ProdEnv:

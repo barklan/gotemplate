@@ -1,9 +1,10 @@
-package config
+package config_test
 
 import (
 	"os"
 	"testing"
 
+	"github.com/barklan/gotemplate/pkg/myapp/config"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/goleak"
 )
@@ -17,19 +18,19 @@ func TestRead(t *testing.T) {
 	tests := []struct {
 		name    string
 		envVars map[string]string
-		want    *Config
+		want    *config.Config
 		wantErr bool
 	}{
 		{
 			"test env vars",
 			map[string]string{"MYAPP_SECRET": "supersecretkey"}, // pragma: allowlist secret
-			&Config{Secret: "supersecretkey"},                   // pragma: allowlist secret
+			&config.Config{Secret: "supersecretkey"},            // pragma: allowlist secret
 			false,
 		},
 		{
 			"default env vars",
 			map[string]string{},
-			&Config{Secret: "12345"},
+			&config.Config{Secret: "12345"},
 			false,
 		},
 	}
@@ -41,7 +42,7 @@ func TestRead(t *testing.T) {
 					t.Fatalf("failed to set env var: %v", err)
 				}
 			}
-			got, err := Read()
+			got, err := config.Read()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Read() error = %v, wantErr %v", err, tt.wantErr)
 

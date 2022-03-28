@@ -1,7 +1,7 @@
 //go:build e2e
 // +build e2e
 
-package myapp
+package myapp_test
 
 import (
 	"net/http"
