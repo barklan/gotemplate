@@ -26,7 +26,7 @@ repos:
     rev: v0.17.0
     hooks:
       - id: gitlint
-        args: ["--ignore=body-is-missing", "--msg-filename"]
+        args: ["--ignore=body-is-missing", "--contrib=contrib-title-conventional-commits", "--msg-filename"]
   - repo: https://github.com/codespell-project/codespell
     rev: v2.1.0
     hooks:
