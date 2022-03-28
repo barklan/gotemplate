@@ -2,9 +2,9 @@ package config
 
 import (
 	"os"
-	"reflect"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"go.uber.org/goleak"
 )
 
@@ -21,16 +21,21 @@ func TestRead(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			"test env var",
+			"test env vars",
 			map[string]string{"MYAPP_SECRET": "supersecretkey"}, // pragma: allowlist secret
 			&Config{Secret: "supersecretkey"},                   // pragma: allowlist secret
 			false,
 		},
+		{
+			"default env vars",
+			map[string]string{},
+			&Config{Secret: "12345"},
+			false,
+		},
 	}
-	for _, tt := range tests {
+	for _, tt := range tests { // nolint:paralleltest
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
 			for k, v := range tt.envVars {
 				if err := os.Setenv(k, v); err != nil {
 					t.Fatalf("failed to set env var: %v", err)
@@ -42,8 +47,11 @@ func TestRead(t *testing.T) {
 
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Read() = %v, want %v", got, tt.want)
+			assert.Equal(t, got, tt.want)
+			for k := range tt.envVars {
+				if err := os.Unsetenv(k); err != nil {
+					t.Fatalf("failed to set env var: %v", err)
+				}
 			}
 		})
 	}
