@@ -1,5 +1,18 @@
 # myapp
 
+## Features
+
+- Obnoxious amount of `pre-commit` hooks.
+- `run.sh` - convenient alternative to `Makefile` (call with `bash run.sh <function>`). Can be used locally and in CI.
+- Smallest and secure `Dockerfile` for Go app based on scratch.
+- Ready to use skeleton for multiple Go apps. (Shared packages under `pkg/`, app-specific packages under `pkg/myapp/`).
+- Automatically reload multiple apps on change using [reflex](https://github.com/cespare/reflex) (`reflex.conf`).
+- Small bits ready to be modified:
+  - Structured logging (using `zap`, package `logging` - colored plaintext locally, json in production)
+  - Example of e2e test (`pkg/myapp/e2e_test.go`)
+  - Example of env vars handling (`pkg/myapp/config`)
+  - Example of signal handling (`pkg/system/signals.go`)
+
 ## Usage
 
 To start using this template perform these steps:
