@@ -13,6 +13,8 @@
   - Example of env vars handling (`pkg/myapp/config`)
   - Example of signal handling (`pkg/system/signals.go`)
 
+> `.pre-conmmit-config.yaml` includes some Python-specific checks that are not run when no `python` files are present.
+
 ## Usage
 
 To start using this template perform these steps:
