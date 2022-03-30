@@ -2,9 +2,9 @@
 
 ## Features
 
-- Obnoxious amount of `pre-commit` hooks.
-- `run.sh` - convenient alternative to `Makefile` (call with `bash run.sh <function>`). Can be used locally and in CI.
-- Smallest and secure `Dockerfile` for Go app based on scratch.
+- Obnoxious amount of `pre-commit` hooks. (`.pre-commit-config.yaml`)
+- `run.sh` - convenient alternative to `Makefile` (call with `bash run.sh <function>`). Can be used locally and in CI systems.
+- Smallest and secure `Dockerfile` for Go app based on scratch. (`dockerfiles/myapp.dockerfile`)
 - Ready to use skeleton for multiple Go apps. (Shared packages under `pkg/`, app-specific packages under `pkg/myapp/`).
 - Automatically reload multiple apps on change using [reflex](https://github.com/cespare/reflex) (`reflex.conf`).
 - Small bits ready to be modified:

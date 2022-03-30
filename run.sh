@@ -54,6 +54,8 @@ test:e2e() {
     go test -v -race -tags e2e ./...
 }
 
+# Modifies .env in the root of the repo based on environment/prod.override.env.
+# To be used in CI deployment pipelines.
 env:prod() {
     ENV_FOR=prod bash ./scripts/build_env.sh
 }
