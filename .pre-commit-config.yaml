@@ -17,7 +17,7 @@ repos:
       - id: mixed-line-ending
         args: ["--fix=no"]
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v2.21.2
+    rev: v2.23.0
     hooks:
       - id: commitizen
         stages: [commit-msg]
@@ -36,7 +36,7 @@ repos:
     hooks:
       - id: detect-secrets
   - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.5.1
+    rev: v8.5.3
     hooks:
       - id: gitleaks
   - repo: https://github.com/yoheimuta/protolint
@@ -67,9 +67,14 @@ repos:
     hooks:
       - id: golang-filenames
         name: check go filenames
-        entry: go filenames must be snake-case
+        entry: go filenames must be snake_case
         language: fail
         files: '[a-z0-9_/]*[^a-z0-9_/]+[a-z0-9_]*\.go$'
+      - id: python-filenames
+        name: check py filenames
+        entry: py filenames must be snake_case
+        language: fail
+        files: '[a-z0-9_/]*[^a-z0-9_/]+[a-z0-9_]*\.py$'
       - id: dotenv-linter
         name: run dotenv linter
         language: docker_image
@@ -80,15 +85,87 @@ repos:
         language: docker_image
         entry: redocly/openapi-cli lint docs/openapi.yml
         files: ^docs/openapi.yml$
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.31.1
+    hooks:
+      - id: markdownlint
+        args:
+          - "--disable=MD013"
+  - repo: https://github.com/golangci/golangci-lint
+    rev: v1.45.2
+    hooks:
+      - id: golangci-lint
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.64.0
+    hooks:
+      - id: terraform_validate
+  - repo: https://github.com/ansible-community/ansible-lint
+    rev: v6.0.2
+    hooks:
+      - id: ansible-lint
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.8.0.4
+    hooks:
+      - id: shellcheck
+        args: ["--severity=warning"]
+  # Python specific
+  - repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        args:
+          - --profile=black
+  - repo: https://github.com/pycqa/flake8
+    rev: 4.0.1
+    hooks:
+      - id: flake8
+        args:
+          - --max-line-length=120
+        additional_dependencies: [
+          flake8-eradicate,
+          flake8-pytest-style
+        ]
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.4
+    hooks:
+      - id: bandit
+        exclude: "_test.py$|test_.*.py$"
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.9.0
+    hooks:
+      - id: python-check-blanket-noqa
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v0.942
+    hooks:
+      - id: mypy
+  # TODO configure
+  # https://github.com/jendrikseipp/vulture#configuration
+  # - repo: https://github.com/jendrikseipp/vulture
+  #   rev:  v2.3
+  #   hooks:
+  #     - id: vulture
+  # TODO configure
+  # - repo: local
+  #   hooks:
+  #     - id: pytest-check
+  #       name: pytest-check
+  #       entry: pdm run pytest --ignore-glob=__pypackages__
+  #       language: system
+  #       types: [python]
+  #       pass_filenames: false
+  #       always_run: true
 ci:
   autofix_commit_msg: |
     [pre-commit.ci] auto fixes from pre-commit.com hooks
-
     for more information, see https://pre-commit.ci
   autofix_prs: false
   autoupdate_branch: ""
   autoupdate_commit_msg: "[pre-commit.ci] pre-commit autoupdate"
-  autoupdate_schedule: weekly
+  autoupdate_schedule: monthly
   # These require either docker or docker-compose.
   skip: [dotenv-linter, openapi-linter, docker-compose-check]
   submodules: false

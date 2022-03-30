@@ -7,7 +7,8 @@ To start using this template perform these steps:
 - `rm go.sum go.mod`
 - `go mod init <your_module_name>`
 - delete all imports of gotemplate package
-- replace `myapp` in filenames (folders in `cmd` and `pkg` and dockerfile in `dockerfiles`) and source to the name of your app
+- replace `myapp` in filenames (folders in `cmd` and `pkg` and dockerfile in
+`dockerfiles`) and source to the name of your app
 - `go mod tidy`
 
 ### pre-commit
@@ -29,7 +30,8 @@ Use this Dockerfile:
 
 ```dockerfile
 FROM python:3.10-slim
-RUN apt update && apt install -y --no-install-recommends git && rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin || true
+RUN apt update && apt install -y --no-install-recommends git && \
+rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin || true
 RUN pip install --no-cache-dir pre-commit
 ```
 
@@ -51,8 +53,9 @@ pre-commit:
       when: on_success
     - when: never
   image: registry.gitlab.com/.../docker-pre-commit
-  script:
-    - PRE_COMMIT_HOME=$CI_PROJECT_DIR/.cache/pre-commit SKIP=docker-compose-check,openapi-linter,dotenv-linter pre-commit run --all-files
+  script: >
+    PRE_COMMIT_HOME=$CI_PROJECT_DIR/.cache/pre-commit
+    SKIP=docker-compose-check,openapi-linter,dotenv-linter pre-commit run --all-files
   cache:
     paths:
       - $CI_PROJECT_DIR/.cache
@@ -86,13 +89,14 @@ function yes_or_no {
 }
 ```
 
-And use this task for VSCode. By using the function above you can clear all problems by rerunning the task and answering `n` in interactive prompt.
+And use this task for VSCode. By using the function above you can clear all problems
+by rerunning the task and answering `n` in interactive prompt.
 
 ```json
 {
     "label": "golangci-lint",
     "type": "shell",
-    "command": "bash -ic 'yes_or_no \"Run golangci-lint?\" true && golangci-lint run --enable-all  --disable=wsl,varnamelen,testpackage,gomnd,exhaustivestruct || true'",
+    "command": "bash -ic 'yes_or_no \"Run golangci-lint?\" true && golangci-lint run --enable-all || true'",
     "problemMatcher": {
         "owner": "golangci-lint",
         "fileLocation": [
