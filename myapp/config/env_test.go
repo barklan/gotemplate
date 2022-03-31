@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/barklan/gotemplate/pkg/myapp/config"
+	"github.com/barklan/gotemplate/myapp/config"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/goleak"
 )

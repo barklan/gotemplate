@@ -1,23 +1,19 @@
 # myapp
 
-## Features
+A small highly opinionated Go template. **I do not recommend this as a good for everything (even not best practice) template. Meant to be used for with reductionist approach by deleting stuff before use.**
 
-- Obnoxious amount of `pre-commit` hooks. (`.pre-commit-config.yaml`)
-- `run.sh` - convenient alternative to `Makefile` (call with `bash run.sh <function>`). Can be used locally and in CI systems.
-- Smallest and secure `Dockerfile` for Go app based on scratch. (`dockerfiles/myapp.dockerfile`)
-- Ready to use skeleton for multiple Go apps. (Shared packages under `pkg/`, app-specific packages under `pkg/myapp/`).
+- Lots of hooks in pre-commit (most non Go related)
+- `run.sh` - alternative to `Makefile` (call with `bash run.sh <function>`).
+- Smallest and secure `Dockerfile` for Go app based on scratch.
+- Ready to use skeleton for multiple Go services.
 - Automatically reload multiple apps on change using [reflex](https://github.com/cespare/reflex) (`reflex.conf`).
-- Small bits ready to be modified:
+- Small bits:
   - Structured logging (using `zap`, package `logging` - colored plaintext locally, json in production)
-  - Example of e2e test (`pkg/myapp/e2e_test.go`)
   - Example of env vars handling (`pkg/myapp/config`)
-  - Example of signal handling (`pkg/system/signals.go`)
-
-> `.pre-conmmit-config.yaml` includes some Python-specific checks that are not run when no `python` files are present.
 
 ## Usage
 
-To start using this template perform these steps:
+To start using:
 
 - `rm go.sum go.mod`
 - `go mod init <your_module_name>`
@@ -74,91 +70,4 @@ pre-commit:
   cache:
     paths:
       - $CI_PROJECT_DIR/.cache
-```
-
-### VSCode
-
-#### golangci-lint integration
-
-Paste this in your `~/.bashrc`:
-
-```bash
-function yes_or_no {
-        QUESTION=$1
-        DEFAULT=$2
-        if [ "$DEFAULT" = true ]; then
-                OPTIONS="[Y/n]"
-                DEFAULT="y"
-            else
-                OPTIONS="[y/N]"
-                DEFAULT="n"
-        fi
-        read -p "$QUESTION $OPTIONS " -n 1 -s -r INPUT
-        INPUT=${INPUT:-${DEFAULT}}
-        echo ${INPUT}
-        if [[ "$INPUT" =~ ^[yY]$ ]]; then
-            return 0
-        else
-            return 1
-        fi
-}
-```
-
-And use this task for VSCode. By using the function above you can clear all problems
-by rerunning the task and answering `n` in interactive prompt.
-
-```json
-{
-    "label": "golangci-lint",
-    "type": "shell",
-    "command": "bash -ic 'yes_or_no \"Run golangci-lint?\" true && golangci-lint run --enable-all || true'",
-    "problemMatcher": {
-        "owner": "golangci-lint",
-        "fileLocation": [
-            "relative",
-            "${workspaceFolder}"
-        ],
-        "pattern": {
-            "regexp": "^(.*):(\\d+):(\\d+):\\s+(.*)$",
-            "file": 1,
-            "line": 2,
-            "column": 3,
-            "message": 4
-        }
-    },
-    "presentation": {
-        "echo": false,
-        "reveal": "always",
-        "focus": true,
-        "panel": "shared",
-        "showReuseMessage": false,
-        "clear": true
-    }
-}
-```
-
-#### golines integration
-
-You can use [golines](https://github.com/segmentio/golines) formatter to fix long lines:
-
-```bash
-go install github.com/segmentio/golines@latest
-```
-
-Use this task:
-
-```json
-{
-    "label": "golines",
-    "type": "shell",
-    "command":"bash -ic \"golines -w -m 100 ${file}\"",
-    "presentation": {
-        "echo": false,
-        "reveal": "never",
-        "focus": false,
-        "panel": "shared",
-        "showReuseMessage": false,
-        "clear": false
-    }
-}
 ```
