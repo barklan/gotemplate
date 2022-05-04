@@ -43,14 +43,6 @@ up:compose() {
     docker-compose --profile main up
 }
 
-lint() {
-    golangci-lint run --enable-all --disable=wsl,varnamelen,testpackage,gomnd,exhaustivestruct
-}
-
-test() {
-    go test -v -race -cover ./...
-}
-
 test:e2e() {
     go test -v -race -tags e2e ./...
 }
