@@ -23,7 +23,7 @@ function _use_env {
 }
 
 up() {
-    reflex -c reflex.conf --decoration=fancy
+    reflex -c reflex.conf
 }
 
 up:myapp() {
