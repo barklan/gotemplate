@@ -25,7 +25,6 @@ WORKDIR $GOPATH/src/mypackage/myapp/
 
 COPY go.mod go.sum ./
 
-# ENV GO111MODULE=on
 RUN --mount=type=cache,target=/go/pkg/mod \
     GOMODCACHE=/go/pkg/mod go mod download all
 RUN go mod verify

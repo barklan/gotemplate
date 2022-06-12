@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/barklan/gotemplate/myapp/config"
+	"github.com/barklan/gotemplate/config"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/goleak"
 )
@@ -23,8 +23,8 @@ func TestRead(t *testing.T) {
 	}{
 		{
 			"test env vars",
-			map[string]string{"MYAPP_SECRET": "supersecretkey"}, // pragma: allowlist secret
-			&config.Config{Secret: "supersecretkey"},            // pragma: allowlist secret
+			map[string]string{"MYAPP_SECRET": "supersecretkey"},
+			&config.Config{Secret: "supersecretkey"},
 			false,
 		},
 		{

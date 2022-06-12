@@ -2,24 +2,47 @@ package main
 
 import (
 	"log"
+	"os"
+	"os/signal"
+	"syscall"
 
-	"github.com/barklan/gotemplate/pkg/logging"
-	"github.com/barklan/gotemplate/pkg/system"
+	"github.com/barklan/gotemplate/config"
+	"github.com/barklan/y/slog"
 	_ "go.uber.org/automaxprocs"
+	"go.uber.org/zap"
 )
+
+const devLogger = "DEV_LOGGER"
+
+func HandleSignals() {
+	sigs := make(chan os.Signal, 1)
+	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+
+	sig := <-sigs
+	log.Printf("received %s - exiting\n", sig)
+	os.Exit(0)
+}
 
 func main() {
 	log.Println("starting myapp")
-	go system.HandleSignals()
+	go HandleSignals()
 
-	logger, err := logging.NewAuto()
-	if err != nil {
-		log.Fatalf("failed to init logger: %v\n", err)
+	var logger *zap.Logger
+	var err error
+	devLogger := os.Getenv(devLogger)
+	if devLogger == "true" {
+		logger, err = slog.Dev()
+	} else {
+		logger, err = slog.Prod()
 	}
-	// conf, err := config.Read()
-	// if err != nil {
-	// 	log.Panicf("failed to read config: %v\n", err)
-	// }
+	if err != nil {
+		log.Fatalf("failed to initialize logger: %v\n", err)
+	}
+
+	_, err = config.Read()
+	if err != nil {
+		log.Panicf("failed to read config: %v\n", err)
+	}
 
 	// Start app here
 	logger.Info("main exited")
