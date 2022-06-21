@@ -3,10 +3,10 @@ module github.com/barklan/gotemplate
 go 1.18
 
 require (
-	github.com/barklan/y v0.0.0-20220612141646-87c84d2decf0
-	github.com/caarlos0/env/v6 v6.9.1
-	github.com/stretchr/testify v1.7.1
-	go.uber.org/automaxprocs v1.4.0
+	github.com/barklan/y v0.0.0-20220612175412-0ac7c170a5bc
+	github.com/caarlos0/env/v6 v6.9.3
+	github.com/stretchr/testify v1.7.2
+	go.uber.org/automaxprocs v1.5.1
 	go.uber.org/goleak v1.1.12
 	go.uber.org/zap v1.21.0
 )
@@ -18,5 +18,5 @@ require (
 	go.uber.org/multierr v1.8.0 // indirect
 	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect
 	golang.org/x/tools v0.1.7 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
