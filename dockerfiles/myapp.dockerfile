@@ -1,7 +1,6 @@
 # syntax=docker/dockerfile:1.3
-# STEP 1 build executable binary
 ARG DOCKER_IMAGE_PREFIX=
-FROM ${DOCKER_IMAGE_PREFIX}golang:1.18-alpine as builder
+FROM ${DOCKER_IMAGE_PREFIX}golang:1.19-alpine as builder
 ARG BUILDKIT_INLINE_CACHE=1
 
 # Install git + SSL ca certificates.
@@ -37,7 +36,6 @@ RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/g
     -ldflags='-w -s -extldflags "-static"' -a \
     -o /go/bin/app ./cmd/myapp/.
 
-# STEP 2 build a small image
 FROM scratch
 
 ENV DOCKERIZED=true
