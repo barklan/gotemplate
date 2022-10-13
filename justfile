@@ -1,3 +1,5 @@
+set shell := ["bash", "-uc"]
+
 myapp-up:
     set -a; . .env; set +a && go run ./cmd/myapp
 

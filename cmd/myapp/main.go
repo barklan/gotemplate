@@ -6,10 +6,12 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/barklan/gotemplate/config"
-	"github.com/barklan/y/slog"
 	_ "go.uber.org/automaxprocs"
 	"go.uber.org/zap"
+
+	"github.com/barklan/gotemplate/slog"
+
+	"github.com/barklan/gotemplate/config"
 )
 
 const devLogger = "DEV_LOGGER"
