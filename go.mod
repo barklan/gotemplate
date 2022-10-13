@@ -3,7 +3,6 @@ module github.com/barklan/gotemplate
 go 1.19
 
 require (
-	github.com/barklan/y v0.0.0-20220612175412-0ac7c170a5bc
 	github.com/caarlos0/env/v6 v6.10.1
 	github.com/stretchr/testify v1.8.0
 	go.uber.org/automaxprocs v1.5.1
