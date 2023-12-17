@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.3
+# syntax=docker/dockerfile:1.5
 ARG DOCKER_IMAGE_PREFIX=
 FROM ${DOCKER_IMAGE_PREFIX}golang:1.19-alpine as builder
 ARG BUILDKIT_INLINE_CACHE=1

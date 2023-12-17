@@ -22,3 +22,4 @@ func Read() (*Config, error) {
 
 	return &cfg, nil
 }
+

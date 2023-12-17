@@ -4,9 +4,10 @@ import (
 	"os"
 	"testing"
 
-	"github.com/barklan/gotemplate/config"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/goleak"
+
+	"github.com/barklan/gotemplate/config"
 )
 
 func TestMain(m *testing.M) {
